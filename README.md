@@ -5,6 +5,9 @@ Test on React and TypeScript using User API
 The objective of this technical test is to create a similar application to the one provided in this link: https://xxxxx. To achieve this, you must use the API provided by https://randomuser.me/.
 Here are the steps to follow:
 
+Tabla
+[foto][nombre][apellido][pais][acciones]
+
 -[] Fetch 100 rows of data using the API.
 -[] Display the data in a table format, similar to the example.
 -[] Provide the option to color rows as shown in the example.

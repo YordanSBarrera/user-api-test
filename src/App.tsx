@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import "./App.css";
+import UserTable from "./UserTable";
+import { User } from "./util";
 
 function App() {
-  const [user, setUser] = useState();
+  const [users, setUsers] = useState<User[]>();
   const apiUrl = "https://randomuser.me/api/?results=100";
 
   useEffect(() => {
@@ -10,22 +13,18 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setUser(data);
+        setUsers(data.results);
       });
   }, []);
 
-  console.log(user);
+  if (!users) return <>Loading data....</>;
+
   return (
     <>
-      <h1>User table</h1>
-      <table>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-        </tr>
-      </table>
+      <div className="rootDiv">
+        <h1>User table</h1>
+        <UserTable users={users} />
+      </div>
     </>
   );
 }
