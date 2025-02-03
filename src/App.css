@@ -7,7 +7,6 @@
 }
 
 .rootDiv {
-  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -16,7 +15,7 @@
   background-color: #f0f0f0;
 }
 .table {
-  width: 80%;
+  width: 90%;
   border-collapse: collapse;
   background-color: #989;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
