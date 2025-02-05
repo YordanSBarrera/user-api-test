@@ -3,40 +3,32 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.rootDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: #989;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra opcional */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.table th,
+.table td {
+  padding: 12px; /* Espaciado interno de las celdas */
+  text-align: left; /* Alineación del texto */
+  border: 1px solid #ddd; /* Borde de las celdas */
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.table th {
+  background-color: #f8f8f8; /* Color de fondo del encabezado */
+  font-weight: bold; /* Texto en negrita */
 }
