@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import UserTable from "./UserTable";
 import { User } from "./util";
@@ -8,6 +8,7 @@ function App() {
   const apiUrl = "https://randomuser.me/api/?results=100";
   const [hasColor, setHasColor] = useState<boolean>(false);
   const [sortByCountry, setSortByCoutry] = useState<boolean>(false);
+  const originalState = useRef<User[]>([]);
 
   useEffect(() => {
     fetch(apiUrl)
@@ -16,6 +17,7 @@ function App() {
       })
       .then((data) => {
         setUsers(data.results);
+        originalState.current = data.results;
       });
   }, []);
 
@@ -33,6 +35,10 @@ function App() {
     });
 
     setUsers(deletedUsers);
+  };
+
+  const resetUsers = () => {
+    setUsers(originalState.current);
   };
 
   return (
@@ -54,6 +60,7 @@ function App() {
           >
             {sortByCountry ? "Quitar orden por Pais" : "Ordenar por Pais"}
           </button>
+          <button onClick={resetUsers}>Resetear Usuarios Originales</button>
         </div>
         <UserTable
           users={sortedUsers}
