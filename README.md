@@ -2,7 +2,7 @@
 
 Test on React and TypeScript using User API
 
-The objective of this technical test is to create a similar application to the one provided in this link: https://xxxxx. To achieve this, you must use the API provided by https://randomuser.me/.
+The objective of this technical test is to create a similar application to the one provided in this link: https://effulgent-melba-009e8e.netlify.app/. To achieve this, you must use the API provided by https://randomuser.me/.
 Here are the steps to follow:
 
 Tabla
