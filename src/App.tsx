@@ -27,6 +27,14 @@ function App() {
       })
     : users;
 
+  const deleteUser = (email: string) => {
+    const deletedUsers = users.filter((user) => {
+      return user.email !== email;
+    });
+
+    setUsers(deletedUsers);
+  };
+
   return (
     <>
       <div className="rootDiv">
@@ -47,7 +55,11 @@ function App() {
             {sortByCountry ? "Quitar orden por Pais" : "Ordenar por Pais"}
           </button>
         </div>
-        <UserTable users={sortedUsers} hasColor={hasColor} />
+        <UserTable
+          users={sortedUsers}
+          hasColor={hasColor}
+          deleteUser={deleteUser}
+        />
       </div>
     </>
   );

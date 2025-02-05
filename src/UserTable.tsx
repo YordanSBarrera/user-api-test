@@ -3,9 +3,10 @@ import { User } from "./util";
 type UserTableProps = {
   users: User[];
   hasColor: boolean;
+  deleteUser: (email: string) => void;
 };
 
-const UserTable = ({ users, hasColor }: UserTableProps) => {
+const UserTable = ({ users, hasColor, deleteUser }: UserTableProps) => {
   return (
     <table className="table">
       <thead>
@@ -37,7 +38,7 @@ const UserTable = ({ users, hasColor }: UserTableProps) => {
               <td>{user.name.last}</td>
               <td>{user.location.country}</td>
               <td>
-                <button onClick={() => {}}>Delete</button>
+                <button onClick={() => deleteUser(user.email)}>Delete</button>
               </td>
             </tr>
           );
