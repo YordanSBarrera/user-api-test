@@ -9,6 +9,7 @@ function App() {
   const [hasColor, setHasColor] = useState<boolean>(false);
   const [sortByCountry, setSortByCoutry] = useState<boolean>(false);
   const originalState = useRef<User[]>([]);
+  const [filteredByCountry, setFiltedByCountry] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(apiUrl)
@@ -41,6 +42,14 @@ function App() {
     setUsers(originalState.current);
   };
 
+  const filteredByCountryUsers = filteredByCountry
+    ? users.filter((user) =>
+        user.location.country
+          .toLocaleLowerCase()
+          .includes(filteredByCountry.toLocaleLowerCase())
+      )
+    : users;
+
   return (
     <>
       <div className="rootDiv">
@@ -61,9 +70,15 @@ function App() {
             {sortByCountry ? "Quitar orden por Pais" : "Ordenar por Pais"}
           </button>
           <button onClick={resetUsers}>Resetear Usuarios Originales</button>
+          <input
+            placeholder="Filtrar por Pais"
+            onChange={(even) => {
+              setFiltedByCountry(even.target.value);
+            }}
+          />
         </div>
         <UserTable
-          users={sortedUsers}
+          users={filteredByCountry ? filteredByCountryUsers : sortedUsers}
           hasColor={hasColor}
           deleteUser={deleteUser}
         />
