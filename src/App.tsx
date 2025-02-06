@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import UserTable from "./UserTable";
-import { User } from "./util";
+import { filterByType, filterColunm, User } from "./util";
 
 function App() {
   const [users, setUsers] = useState<User[]>();
   const apiUrl = "https://randomuser.me/api/?results=100";
+  const [hasColor, setHasColor] = useState<boolean>(false);
+  const [sortByCountry, setSortByCoutry] = useState<boolean>(false);
+  const originalState = useRef<User[]>([]);
+  const [filteredByCountry, setFiltedByCountry] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(apiUrl)
@@ -14,16 +18,98 @@ function App() {
       })
       .then((data) => {
         setUsers(data.results);
+        originalState.current = data.results;
       });
   }, []);
 
   if (!users) return <>Loading data....</>;
 
+  const sortedUsers = sortByCountry
+    ? [...users].sort((a, b) => {
+        return a.location.country.localeCompare(b.location.country);
+      })
+    : users;
+
+  const deleteUser = (email: string) => {
+    const deletedUsers = users.filter((user) => {
+      return user.email !== email;
+    });
+    setUsers(deletedUsers);
+  };
+
+  const resetUsers = () => {
+    setUsers(originalState.current);
+  };
+
+  const filteredByCountryUsers = filteredByCountry
+    ? users.filter((user) =>
+        user.location.country
+          .toLocaleLowerCase()
+          .includes(filteredByCountry.toLocaleLowerCase())
+      )
+    : users;
+
+  const filterBy = (colunm: filterByType) => {
+    console.log(colunm);
+    switch (colunm) {
+      case filterColunm.pais:
+        console.log("swit pais");
+        return users.sort((a, b) => {
+          return a.location.country.localeCompare(b.location.country);
+        });
+        break;
+      case filterColunm.nombre:
+        console.log("swit nombre");
+        return users.sort((a, b) => {
+          return a.name.first.localeCompare(b.name.first);
+        });
+        break;
+      case filterColunm.apellido:
+        console.log("swit apellido");
+        return users.sort((a, b) => {
+          return a.name.last.localeCompare(b.name.last);
+        });
+        break;
+      default:
+        return users;
+    }
+  };
+
+  // const filteredUsers=
+
   return (
     <>
       <div className="rootDiv">
         <h1>User table</h1>
-        <UserTable users={users} />
+        <div style={{ display: "flex", marginBottom: "10px", gap: "5px" }}>
+          <button
+            onClick={() => {
+              setHasColor((prevState) => !prevState);
+            }}
+          >
+            {hasColor ? "Quitar Color Tabla" : "Dar Color Tabla"}
+          </button>
+          <button
+            onClick={() => {
+              setSortByCoutry((prevState) => !prevState);
+            }}
+          >
+            {sortByCountry ? "Quitar orden por Pais" : "Ordenar por Pais"}
+          </button>
+          <button onClick={resetUsers}>Resetear Usuarios Originales</button>
+          <input
+            placeholder="Filtrar por Pais"
+            onChange={(even) => {
+              setFiltedByCountry(even.target.value);
+            }}
+          />
+        </div>
+        <UserTable
+          users={filteredByCountry ? filteredByCountryUsers : sortedUsers}
+          hasColor={hasColor}
+          deleteUser={deleteUser}
+          filterByColunm={filterBy}
+        />
       </div>
     </>
   );
