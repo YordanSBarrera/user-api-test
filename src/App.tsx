@@ -96,7 +96,7 @@ function App() {
   return (
     <>
       <div className="rootDiv">
-        <h1>User table</h1>
+        <h1>Lista de Usuarios</h1>
         <div style={{ display: "flex", marginBottom: "10px", gap: "5px" }}>
           <button
             onClick={() => {

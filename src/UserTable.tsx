@@ -17,13 +17,13 @@ const UserTable = ({
     <table className="table">
       <thead>
         <tr>
-          <td>Foto</td>
-          <td onClick={() => filterByColunm(filterColunm.nombre)}>Nombre</td>
-          <td onClick={() => filterByColunm(filterColunm.apellido)}>
+          <th>Foto</th>
+          <th onClick={() => filterByColunm(filterColunm.nombre)}>Nombre</th>
+          <th onClick={() => filterByColunm(filterColunm.apellido)}>
             Apellido
-          </td>
-          <td onClick={() => filterByColunm(filterColunm.pais)}>Pais</td>
-          <td>acciones</td>
+          </th>
+          <th onClick={() => filterByColunm(filterColunm.pais)}>Pais</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
