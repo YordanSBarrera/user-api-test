@@ -1,20 +1,28 @@
-import { User } from "./util";
+import { filterByType, filterColunm, User } from "./util";
 
 type UserTableProps = {
   users: User[];
   hasColor: boolean;
   deleteUser: (email: string) => void;
+  filterByColunm: (colunm: filterByType) => void;
 };
 
-const UserTable = ({ users, hasColor, deleteUser }: UserTableProps) => {
+const UserTable = ({
+  users,
+  hasColor,
+  deleteUser,
+  filterByColunm,
+}: UserTableProps) => {
   return (
     <table className="table">
       <thead>
         <tr>
           <td>Foto</td>
-          <td>Nombre</td>
-          <td>Apellido</td>
-          <td>Pais</td>
+          <td onClick={() => filterByColunm(filterColunm.nombre)}>Nombre</td>
+          <td onClick={() => filterByColunm(filterColunm.apellido)}>
+            Apellido
+          </td>
+          <td onClick={() => filterByColunm(filterColunm.pais)}>Pais</td>
           <td>acciones</td>
         </tr>
       </thead>

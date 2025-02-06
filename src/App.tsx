@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import UserTable from "./UserTable";
-import { User } from "./util";
+import { filterByType, filterColunm, User } from "./util";
 
 function App() {
   const [users, setUsers] = useState<User[]>();
@@ -34,7 +34,6 @@ function App() {
     const deletedUsers = users.filter((user) => {
       return user.email !== email;
     });
-
     setUsers(deletedUsers);
   };
 
@@ -49,6 +48,34 @@ function App() {
           .includes(filteredByCountry.toLocaleLowerCase())
       )
     : users;
+
+  const filterBy = (colunm: filterByType) => {
+    console.log(colunm);
+    switch (colunm) {
+      case filterColunm.pais:
+        console.log("swit pais");
+        return users.sort((a, b) => {
+          return a.location.country.localeCompare(b.location.country);
+        });
+        break;
+      case filterColunm.nombre:
+        console.log("swit nombre");
+        return users.sort((a, b) => {
+          return a.name.first.localeCompare(b.name.first);
+        });
+        break;
+      case filterColunm.apellido:
+        console.log("swit apellido");
+        return users.sort((a, b) => {
+          return a.name.last.localeCompare(b.name.last);
+        });
+        break;
+      default:
+        return users;
+    }
+  };
+
+  // const filteredUsers=
 
   return (
     <>
@@ -81,6 +108,7 @@ function App() {
           users={filteredByCountry ? filteredByCountryUsers : sortedUsers}
           hasColor={hasColor}
           deleteUser={deleteUser}
+          filterByColunm={filterBy}
         />
       </div>
     </>

@@ -57,3 +57,11 @@ type Location = {
     description: string;
   };
 };
+
+export enum filterColunm {
+  nombre = "nombre",
+  apellido = "apellido",
+  pais = "pais",
+}
+
+export type filterByType = filterColunm | null;
