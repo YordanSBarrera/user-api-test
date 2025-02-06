@@ -10,6 +10,7 @@ function App() {
   const [sortByCountry, setSortByCoutry] = useState<boolean>(false);
   const originalState = useRef<User[]>([]);
   const [filteredByCountry, setFiltedByCountry] = useState<string | null>(null);
+  const [sortByColunm, setSortByColunm] = useState<filterByType>(null);
 
   useEffect(() => {
     fetch(apiUrl)
@@ -24,11 +25,18 @@ function App() {
 
   if (!users) return <>Loading data....</>;
 
-  const sortedUsers = sortByCountry
-    ? [...users].sort((a, b) => {
-        return a.location.country.localeCompare(b.location.country);
-      })
-    : users;
+  // const sortedUsers = sortByCountry
+  //   ? [...users].sort((a, b) => {
+  //       return a.location.country.localeCompare(b.location.country);
+  //     })
+  //   : users;
+  function sortedUsersByCountry(users: User[]) {
+    return sortByCountry
+      ? [...users].sort((a, b) => {
+          return a.location.country.localeCompare(b.location.country);
+        })
+      : users;
+  }
 
   const deleteUser = (email: string) => {
     const deletedUsers = users.filter((user) => {
@@ -41,41 +49,49 @@ function App() {
     setUsers(originalState.current);
   };
 
-  const filteredByCountryUsers = filteredByCountry
-    ? users.filter((user) =>
-        user.location.country
-          .toLocaleLowerCase()
-          .includes(filteredByCountry.toLocaleLowerCase())
-      )
-    : users;
+  // const filteredByCountryUsers = filteredByCountry
+  //   ? users.filter((user) =>
+  //       user.location.country
+  //         .toLocaleLowerCase()
+  //         .includes(filteredByCountry.toLocaleLowerCase())
+  //     )
+  //   : users;
 
-  const filterBy = (colunm: filterByType) => {
-    console.log(colunm);
-    switch (colunm) {
+  function filteredByCountryName(users: User[]) {
+    return filteredByCountry
+      ? users.filter((user: User) =>
+          user.location.country
+            .toLocaleLowerCase()
+            .includes(filteredByCountry.toLocaleLowerCase())
+        )
+      : users;
+  }
+
+  function filterBy(): User[] {
+    switch (sortByColunm) {
       case filterColunm.pais:
         console.log("swit pais");
-        return users.sort((a, b) => {
+        return users!.sort((a, b) => {
           return a.location.country.localeCompare(b.location.country);
         });
-        break;
+
       case filterColunm.nombre:
         console.log("swit nombre");
-        return users.sort((a, b) => {
+        return users!.sort((a, b) => {
           return a.name.first.localeCompare(b.name.first);
         });
-        break;
+
       case filterColunm.apellido:
         console.log("swit apellido");
-        return users.sort((a, b) => {
+        return users!.sort((a, b) => {
           return a.name.last.localeCompare(b.name.last);
         });
-        break;
-      default:
-        return users;
-    }
-  };
 
-  // const filteredUsers=
+      default:
+        return users!;
+    }
+  }
+  const filteredUsers = filteredByCountryName(sortedUsersByCountry(filterBy()));
 
   return (
     <>
@@ -105,10 +121,10 @@ function App() {
           />
         </div>
         <UserTable
-          users={filteredByCountry ? filteredByCountryUsers : sortedUsers}
+          users={filteredUsers}
           hasColor={hasColor}
           deleteUser={deleteUser}
-          filterByColunm={filterBy}
+          filterByColunm={setSortByColunm}
         />
       </div>
     </>
